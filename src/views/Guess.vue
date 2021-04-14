@@ -1,17 +1,20 @@
 <template>
-  <!-- <select v-model="selected">
+  <div class="guess">
+    <!-- <select v-model="selected">
     <option v-for="dog in dogs" :key="dog" :value="{ text: dog }">
       {{ dog }}
     </option>
   </select> -->
-  <img
-    id="guess"
-    ref="guess"
-    :src="getImage(getRandomDog())"
-    alt="random dog"
-    width="280"
-  /><br />
-  <DogChooser :dificulty="'easy'" :rightDog="guess"/>
+    <img
+      class="guess--image"
+      id="guess"
+      ref="guess"
+      :src="getImage(getRandomDog())"
+      alt="random dog"
+      width="280"
+    /><br />
+    <DogChooser :dificulty="'easy'" :rightDog="this.guess" />
+  </div>
   <!-- {{ getImage(getRandomDog()) }} -->
   <!-- {{ getRandomDog() }} - {{ guess }} - {{ getRandomDog() }} -->
 </template>
@@ -20,7 +23,6 @@ import { mapState } from "vuex";
 import axios from "axios";
 import DogChooser from "../components/DogChooser.vue";
 axios.defaults.baseURL = "https://dog.ceo/api/";
-
 
 // import DogCard from "../components/DogCard.vue";
 export default {
@@ -64,9 +66,9 @@ export default {
       }
     },
   },
-  components:{
+  components: {
     DogChooser,
-  }
+  },
 };
 </script>
 <style lang="scss">
@@ -76,5 +78,21 @@ export default {
   text-align: center;
   font-size: 35px;
   font-weight: 700;
+}
+.guess {
+  display: flex;
+  flex-flow: nowrap column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 450px;
+  margin-top: 10px;
+}
+.guess--image {
+  width: auto;
+  height: auto;
+  max-width: 300px;
+  max-height: 250px;
+  border-radius: 20px;
 }
 </style>

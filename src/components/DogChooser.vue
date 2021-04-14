@@ -1,10 +1,10 @@
 <template>
   <div class="choices">
     <!-- {{ getRandomDog() }} - {{ rightDog }} - {{ getRandomDog() }} -->
+    <button class="choices--button" v-for="item in this.fill_n_sort" :key="item">
+      {{ item }}
+    </button>
   </div>
-  <button class="choice--button" v-for="item in this.list" :key="item">
-    {{ item }}
-  </button>
 </template>
 <script>
 import { mapState } from "vuex";
@@ -15,7 +15,7 @@ export default {
   name: "DogChooser",
   data() {
     return {
-      list: [],
+      list: ["1", "2", "3"],
     };
   },
   props: {
@@ -27,17 +27,19 @@ export default {
       type: String,
       required: true,
     },
-    list: {
-      type: Array,
-    },
   },
   computed: {
     ...mapState(["dogs"]),
     fill_n_sort() {
-      this.list.push(this.getRandomDog());
-      this.list.push(this.getRandomDog());
-      this.list.push(this.guess);
-      this.list.sort(() => Math.random() - 0.5);
+      var list = [];
+      list.push(this.rightDog);
+      while (list.length < 3){
+        let randomDog = this.getRandomDog();
+        if(!list.includes(randomDog))list.push(randomDog);
+        // list.push(this.getRandomDog() + "-");
+      }
+      list.sort(() => Math.random() - 0.5);
+      return list;
     },
   },
   methods: {
@@ -55,15 +57,36 @@ export default {
 </script>
 <style lang="scss">
 @import "../scss/_variables.scss";
-.choice {
+.choices {
   display: flex;
-  flex-flow: nowrap row;
-  justify-content: space-between;
+  flex-flow: wrap column;
+  justify-content: space-around;
+  align-items: center;
   width: 280px;
-  height: 150;
+  height: 150px;
   border-radius: 20px;
   background: $secondary-dark-1;
   box-shadow: 0.5em 0.5em $secondary-shadow-light;
   margin: 20px;
+}
+.choices--button {
+  width: 260px;
+  height: 35px;
+  border-radius: 20px;
+  font-weight: 700;
+  color: $primary;
+  background: $primary;
+  border-radius: 20px;
+  color: $secondary-dark-1;
+  font-size: 15px;
+  box-shadow: inset 0 -2px $primary-shadow-light;
+  transition: 1s;
+}
+.choices--button:hover {
+  cursor: pointer;
+  background: inherit;
+  border: 1px solid $primary;
+  box-shadow: 0 0;
+  color: $primary;
 }
 </style>

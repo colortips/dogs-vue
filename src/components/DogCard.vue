@@ -81,6 +81,8 @@ export default {
 }
 .card--image {
   align-self: center;
+  height: auto;
+  width: auto;
   max-height: 180px;
   max-width: 240px;
   border-radius: 10px;
