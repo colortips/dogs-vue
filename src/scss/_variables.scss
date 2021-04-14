@@ -1,0 +1,31 @@
+/* SCSS HEX */
+//BG
+$bg: #f4f9e9ff;
+
+//text
+$text-dark: #153243ff;
+$text-light: #284b63ff;
+
+//primary
+$primary: #30BCEDff;
+$primary-dark-1: #0096C5;
+$primary-dark-2: #00719E;
+$primary-dark-3: #004E79;
+$primary-dark-4: #002E55;
+
+$primary-shadow-light: #99AEBA;
+$primary-shadow-dark: #354A54;
+
+//secondary
+$secondary: #F2F3D9;
+$secondary-dark-1: #FBE6B7;
+$secondary-dark-2: #FFD29C;
+
+$secondary-shadow-light: #BCBEA5;
+$secondary-shadow-dark: #5A5B45;
+
+//Fonts
+@import url(http://fonts.googleapis.com/css?family=Nunito:,400,700);
+
+// Font Variables
+$nunito: 'Nunito', sans-serif;   
