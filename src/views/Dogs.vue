@@ -42,7 +42,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["dogs", "image"]),
+    ...mapState(["dogs"]),
     // getImage(dogName) {
     //   var getImage = "";
     //   console.log("getImage Init: " +dogName)

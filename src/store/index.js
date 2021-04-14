@@ -13,7 +13,6 @@ axios.defaults.baseURL = "https://dog.ceo/api/";
 export default createStore({
   state: {
     dogs: [],
-    image: "",
   },
   mutations: {
     SAVE_DOGS(state, dogs) {
