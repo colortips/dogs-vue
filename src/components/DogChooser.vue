@@ -1,7 +1,7 @@
 <template>
   <div class="choices">
     <!-- {{ getRandomDog() }} - {{ rightDog }} - {{ getRandomDog() }} -->
-    <button class="choices--button" v-for="item in this.fill_n_sort" :key="item">
+    <button class="choices--button" v-for="item in this.fill_n_sort" :key="item" @click="sendAnswer(item)">
       {{ item }}
     </button>
   </div>
@@ -19,8 +19,8 @@ export default {
     };
   },
   props: {
-    dificulty: {
-      type: String,
+    difficulty: {
+      type: Number,
       required: true,
     },
     rightDog: {
@@ -48,6 +48,9 @@ export default {
       var rand = Math.floor(Math.random() * DogsSize);
       return this.$store.state.dogs[rand];
     },
+    sendAnswer(button_answer){
+      this.$emit('event-play', { difficulty: this.difficulty, answer: button_answer})
+    }
   },
   created() {
     // this.$store.dispatch("loadDogs");
@@ -67,7 +70,7 @@ export default {
   border-radius: 20px;
   background: $secondary-dark-1;
   box-shadow: 0.5em 0.5em $secondary-shadow-light;
-  margin: 20px;
+  margin-bottom: 20px;
 }
 .choices--button {
   width: 260px;

@@ -1,5 +1,6 @@
 <template>
   <div class="guess">
+    <div class="guess--gametab">Score : {{score}}</div>
     <!-- <select v-model="selected">
     <option v-for="dog in dogs" :key="dog" :value="{ text: dog }">
       {{ dog }}
@@ -13,7 +14,7 @@
       alt="random dog"
       width="280"
     /><br />
-    <DogChooser :dificulty="'easy'" :rightDog="this.guess" />
+    <DogChooser :difficulty="1" :rightDog="this.guess" @event-play="play"/>
   </div>
   <!-- {{ getImage(getRandomDog()) }} -->
   <!-- {{ getRandomDog() }} - {{ guess }} - {{ getRandomDog() }} -->
@@ -31,6 +32,7 @@ export default {
     return {
       guess: "default",
       selected: "",
+      score: 0,
     };
   },
   computed: {
@@ -65,6 +67,11 @@ export default {
         // console.log("getImage processed: " +axios)
       }
     },
+    play(payload){
+        console.log("Received : " + payload.difficulty + " & " + payload.answer);
+        if(payload.answer === this.guess) this.score += payload.difficulty;
+        else this.score = 0;
+    }
   },
   components: {
     DogChooser,
@@ -85,10 +92,23 @@ export default {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 450px;
-  margin-top: 10px;
+  height: 500px;
+  margin-top: 9px;
+}
+.guess--gametab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 280px;
+  height: 50px;
+  border-radius: 20px;
+  background: $secondary-dark-1;
+  box-shadow: 0.5em 0.5em $secondary-shadow-light;
+  font-weight: 700;
+  font-size: 15px;
 }
 .guess--image {
+  margin-top: 20px;
   width: auto;
   height: auto;
   max-width: 300px;

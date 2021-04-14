@@ -72,10 +72,13 @@ body {
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 770px) {
   .navbar {
-    border-radius: 0 0 20px 20px;
+    height: 50px;
+    border-radius: 0;
+    box-shadow: inset 0 -3px $primary-dark-4;
   }
   .navbar--link {
-    font-size: 20px;
+    font-size: 15px;
+    padding: 5px;
   }
 }
 // #app {
