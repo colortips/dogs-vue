@@ -51,22 +51,21 @@ export default {
     },
     showModal(dogName) {
       var dogsrc = dogName;
-      var imagelist = [];
       if (dogName.includes(" "))
         dogsrc = dogName.split(" ")[1] + "/" + dogName.split(" ")[0];
       if (dogName !== "undefined") {
-        imagelist = axios
+         axios
           .get("breed/" + dogsrc + "/images")
           // .then((response) => (this.info = response.message));
           .then((result) => {
             // this.$refs['dog_img'].src = result.data.message;
-            this.$refs[dogName].src = result.data.message;
+            this.$emit("event-showModal", { dogName: dogName, images: result.data.message });
           })
           .catch((error) => {
             throw new Error(`API ${error}`);
           });
       }
-      this.$emit("event-showModal", { dogName: dogName, images: imagelist });
+      
     },
   },
 };

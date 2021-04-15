@@ -39,8 +39,8 @@ export default {
   data() {
     return {
       selected: "",
-      showModal: true,
-      modalDog: "test",
+      showModal: false,
+      modalDog: "",
       modalImages: [],
     };
   },

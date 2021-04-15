@@ -63,7 +63,12 @@ export default {
     min-height: 300px;
     height: 100%;
     max-height: 600px;
-    background: red;
+}
+.carousel--image{
+  height: auto;
+  width: auto;
+  max-height: 300px;
+  max-width: 100%;
 }
 .DogModal--button {
   font-weight: 700;
