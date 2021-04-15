@@ -1,10 +1,9 @@
 <template>
   <div class="dogsContainer">
-    <DogCard
-      v-for="dog in dogs"
-      :key="dog"
-      :title="dog"
-    />
+    <div class="modalContainer" v-if="showModal == true">
+      <DogModal :title="modalDog" :images="modalImages" @event-closeModal="event_closeModal"/>
+    </div>
+    <DogCard v-for="dog in dogs" :key="dog" :title="dog" @event-showModal="event_showModal" />
     <!-- <select v-model="selected">
     <option
       v-for="dog in dogs"
@@ -33,12 +32,16 @@ import axios from "axios";
 axios.defaults.baseURL = "https://dog.ceo/api/";
 
 import DogCard from "../components/DogCard.vue";
+import DogModal from "../components/DogModal.vue";
 
 export default {
   name: "Dogs",
   data() {
     return {
       selected: "",
+      showModal: true,
+      modalDog: "test",
+      modalImages: [],
     };
   },
   computed: {
@@ -84,22 +87,49 @@ export default {
         // console.log("getImage processed: " +axios)
       }
     },
+    event_closeModal(){
+      this.showModal = false;
+    },
+    event_showModal(payload){
+      this.showModal = true;
+      this.modalDog = payload.dogName;
+      this.modalImages = payload.images;
+    }
     // changeImage(){
     //   console.log("getimage for: "+ this.selected.text + " is " + this.getImage(this.selected.text));
     //   this.$refs['dog_img'].src = this.getImage(this.selected.text);
     // }
   },
-  components:{
+  components: {
     DogCard,
-  }
+    DogModal,
+  },
 };
 </script>
 <style lang="scss">
 @import "../scss/_variables.scss";
-.dogsContainer{
+.dogsContainer {
   display: flex;
   flex-flow: wrap;
   height: 90vh;
   justify-content: center;
+}
+.modalContainer{
+  top: -50px;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  width: 100%;
+  height: calc(100% + 50px);
+}
+.modalContainer::after{
+  content: "";
+  position: absolute;
+  background: black;
+  opacity: 0.5;
+  width: 100%;
+  height: 100%;
 }
 </style>

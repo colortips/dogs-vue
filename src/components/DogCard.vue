@@ -9,7 +9,9 @@
       class="card--image"
       @click="getImage(title)"
     />
-    <button class="card--button" @click="getImage(title)"><span>See more</span></button>
+    <button class="card--button" @click="showModal(title)">
+      <span>See more</span>
+    </button>
   </div>
 </template>
 <script>
@@ -24,7 +26,7 @@ export default {
     },
     image: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   methods: {
@@ -32,7 +34,7 @@ export default {
       var dogsrc = dogName;
       if (dogName.includes(" "))
         dogsrc = dogName.split(" ")[1] + "/" + dogName.split(" ")[0];
-      console.log("getImage Init: " + dogName);
+      // console.log("getImage Init: " + dogName);
       if (dogName !== "undefined") {
         axios
           .get("breed/" + dogsrc + "/images/random")
@@ -46,6 +48,25 @@ export default {
           });
         // console.log("getImage processed: " +axios)
       }
+    },
+    showModal(dogName) {
+      var dogsrc = dogName;
+      var imagelist = [];
+      if (dogName.includes(" "))
+        dogsrc = dogName.split(" ")[1] + "/" + dogName.split(" ")[0];
+      if (dogName !== "undefined") {
+        imagelist = axios
+          .get("breed/" + dogsrc + "/images")
+          // .then((response) => (this.info = response.message));
+          .then((result) => {
+            // this.$refs['dog_img'].src = result.data.message;
+            this.$refs[dogName].src = result.data.message;
+          })
+          .catch((error) => {
+            throw new Error(`API ${error}`);
+          });
+      }
+      this.$emit("event-showModal", { dogName: dogName, images: imagelist });
     },
   },
 };

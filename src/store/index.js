@@ -24,7 +24,7 @@ export default createStore({
   },
   actions: {
     loadDogs({ commit }) {
-      console.log("loadDogs");
+      // console.log("loadDogs");
       axios.get('breeds/list/all')
         .then(result => {
           var keys = [];
