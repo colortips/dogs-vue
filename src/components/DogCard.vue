@@ -113,6 +113,6 @@ export default {
   display: none;
 }
 .card--button:hover:before {
-  content: "Comming soon";
+  content: "Coming soon";
 }
 </style>
