@@ -1,9 +1,24 @@
 <template>
-  <div class="dogsContainer">
+  <div class="dogs">
     <div class="modalContainer" v-if="showModal == true">
-      <DogModal :title="modalDog" :images="modalImages" @event-closeModal="event_closeModal"/>
+      <DogModal
+        :title="modalDog"
+        :images="modalImages"
+        @event-closeModal="event_closeModal"
+      />
     </div>
-    <DogCard v-for="dog in dogs" :key="dog" :title="dog" @event-showModal="event_showModal" />
+    <div class="dogs--filter">
+      <span>Search : </span>
+      <input class="filter--search" type="search" v-model="search" />
+    </div>
+    <div class="dogsContainer">
+      <DogCard
+        v-for="dog in searchDog(dogs)"
+        :key="dog"
+        :title="dog"
+        @event-showModal="event_showModal"
+      />
+    </div>
     <!-- <select v-model="selected">
     <option
       v-for="dog in dogs"
@@ -42,10 +57,13 @@ export default {
       showModal: false,
       modalDog: "",
       modalImages: [],
+      search: "",
+      filteredDog: [],
     };
   },
   computed: {
     ...mapState(["dogs"]),
+
     // getImage(dogName) {
     //   var getImage = "";
     //   console.log("getImage Init: " +dogName)
@@ -87,14 +105,26 @@ export default {
         // console.log("getImage processed: " +axios)
       }
     },
-    event_closeModal(){
+    searchDog(dogs) {
+      var searchDog = [];
+      dogs.forEach((dog) => {
+        // console.log("dog: "+ dog + " s: " + this.search);
+        if (dog.includes(this.search.toLowerCase())) {
+          // console.log("Find :" + dog);
+          searchDog.push(dog);
+        }
+      });
+      // console.log("Number of dogs in research: " + searchDog.length);
+      return searchDog;
+    },
+    event_closeModal() {
       this.showModal = false;
     },
-    event_showModal(payload){
+    event_showModal(payload) {
       this.showModal = true;
       this.modalDog = payload.dogName;
       this.modalImages = payload.images;
-    }
+    },
     // changeImage(){
     //   console.log("getimage for: "+ this.selected.text + " is " + this.getImage(this.selected.text));
     //   this.$refs['dog_img'].src = this.getImage(this.selected.text);
@@ -114,7 +144,7 @@ export default {
   height: 90vh;
   justify-content: center;
 }
-.modalContainer{
+.modalContainer {
   top: -50px;
   position: fixed;
   display: flex;
@@ -124,12 +154,31 @@ export default {
   width: 100%;
   height: calc(100% + 50px);
 }
-.modalContainer::after{
+.modalContainer::after {
   content: "";
   position: absolute;
   background: black;
   opacity: 0.5;
   width: 100%;
   height: 100%;
+}
+.dogs--filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+}
+.dogs--filter span {
+  font-weight: 700;
+  margin-right: 5px;
+  font-size: 20px;
+}
+.filter--search {
+  border: 1px solid $primary;
+  border-radius: 10px;
+  width: 200px;
+  padding-left: 5px;
+  color: $primary;
 }
 </style>
