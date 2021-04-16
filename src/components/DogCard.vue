@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <h1 class="card--title">{{ title }}</h1>
+    <span class="card--title">{{ title }}</span>
     <img
       :id="title"
       :ref="title"
@@ -54,18 +54,20 @@ export default {
       if (dogName.includes(" "))
         dogsrc = dogName.split(" ")[1] + "/" + dogName.split(" ")[0];
       if (dogName !== "undefined") {
-         axios
+        axios
           .get("breed/" + dogsrc + "/images")
           // .then((response) => (this.info = response.message));
           .then((result) => {
             // this.$refs['dog_img'].src = result.data.message;
-            this.$emit("event-showModal", { dogName: dogName, images: result.data.message });
+            this.$emit("event-showModal", {
+              dogName: dogName,
+              images: result.data.message,
+            });
           })
           .catch((error) => {
             throw new Error(`API ${error}`);
           });
       }
-      
     },
   },
 };
@@ -81,7 +83,7 @@ export default {
   height: 400px;
   border-radius: 20px;
   background: $secondary-dark-1;
-  box-shadow: 0.5em 0.5em $secondary-shadow-light;
+  box-shadow: 0.5em 0.5em 0.5em $secondary-shadow-light;
   margin: 20px;
 }
 .card--title {
@@ -98,6 +100,7 @@ export default {
   border-radius: 20px 20px 0 0;
   box-shadow: inset 0 -5px $secondary;
   color: $text-dark;
+  text-align: center;
 }
 .card--image {
   align-self: center;
@@ -108,7 +111,6 @@ export default {
   border-radius: 10px;
 }
 .card--button {
-  content: "Comming soon";
   font-weight: 700;
   align-self: center;
   justify-self: flex-end;
@@ -128,11 +130,5 @@ export default {
   border: 1px solid $primary;
   box-shadow: 0 0;
   color: $primary;
-}
-.card--button:hover span {
-  display: none;
-}
-.card--button:hover:before {
-  content: "Coming soon";
 }
 </style>

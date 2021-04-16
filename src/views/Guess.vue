@@ -103,7 +103,7 @@ export default {
   height: 50px;
   border-radius: 20px;
   background: $secondary-dark-1;
-  box-shadow: 0.5em 0.5em $secondary-shadow-light;
+  box-shadow: 0.5em 0.5em 0.5em $secondary-shadow-light;
   font-weight: 700;
   font-size: 15px;
 }

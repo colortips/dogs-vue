@@ -69,7 +69,7 @@ export default {
   height: 150px;
   border-radius: 20px;
   background: $secondary-dark-1;
-  box-shadow: 0.5em 0.5em $secondary-shadow-light;
+  box-shadow: 0.5em 0.5em 0.5em $secondary-shadow-light;
   margin-bottom: 20px;
 }
 .choices--button {
