@@ -1,17 +1,29 @@
 <template>
   <div class="dogs">
-    <div class="modalContainer" v-if="showModal == true">
-      <DogModal
-        :title="modalDog"
-        :images="modalImages"
-        @event-closeModal="event_closeModal"
-      />
-    </div>
     <div class="dogs--filter">
       <span>Search : </span>
       <input class="filter--search" type="search" v-model="search" />
+      <span>Select : </span>
+      <select class="filter--select" v-model="search">
+        <option class="filter--option" value="">All Dogs</option>
+        <option
+          class="filter--option"
+          v-for="dog in dogs"
+          :key="dog"
+          :value="dog"
+        >
+          {{ dog }}
+        </option>
+      </select>
     </div>
     <div class="dogsContainer">
+      <div class="modalContainer" v-if="showModal == true">
+        <DogModal
+          :title="modalDog"
+          :images="modalImages"
+          @event-closeModal="event_closeModal"
+        />
+      </div>
       <DogCard
         v-for="dog in searchDog(dogs)"
         :key="dog"
@@ -106,9 +118,12 @@ export default {
       }
     },
     searchDog(dogs) {
+      // console.log("Search : " + this.search);
+      if (typeof this.search !== "string") {
+        this.search = this.search.text;
+      } else if (this.search === "undefined") this.search = "";
       var searchDog = [];
       dogs.forEach((dog) => {
-        // console.log("dog: "+ dog + " s: " + this.search);
         if (dog.includes(this.search.toLowerCase())) {
           // console.log("Find :" + dog);
           searchDog.push(dog);
@@ -117,13 +132,31 @@ export default {
       // console.log("Number of dogs in research: " + searchDog.length);
       return searchDog;
     },
+    selectedToSearch() {
+      this.search = this.selected.text;
+    },
     event_closeModal() {
       this.showModal = false;
+      this.enableScroll();
     },
     event_showModal(payload) {
       this.showModal = true;
       this.modalDog = payload.dogName;
       this.modalImages = payload.images;
+      this.disableScroll();
+    },
+    disableScroll() {
+      // Get the current page scroll position
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+      // if any scroll is attempted,
+      // set this to the previous value
+      window.onscroll = function () {
+        window.scrollTo(scrollLeft, scrollTop);
+      };
+    },
+    enableScroll() {
+      window.onscroll = function () {};
     },
     // changeImage(){
     //   console.log("getimage for: "+ this.selected.text + " is " + this.getImage(this.selected.text));
@@ -174,11 +207,24 @@ export default {
   margin-right: 5px;
   font-size: 20px;
 }
-.filter--search {
+.filter--search,
+.filter--select {
   border: 1px solid $primary;
   border-radius: 10px;
   width: 200px;
   padding-left: 5px;
   color: $primary;
+  margin: 0 5px;
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 770px) {
+  .dogs--filter span {
+    font-weight: 700;
+    margin-right: 0px;
+    font-size: calc(10px + 1vw);
+  }
+  .filter--search,
+  .filter--select {
+    width: 100px;
+  }
 }
 </style>

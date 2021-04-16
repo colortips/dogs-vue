@@ -85,7 +85,7 @@ export default {
   top: 0;
   display: flex;
   max-width: 400px;
-  width: 400px;
+  width: 320px;
   min-width: 320px;
   height: 80%;
   background: $secondary-dark-1;
