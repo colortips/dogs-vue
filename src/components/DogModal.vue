@@ -84,8 +84,8 @@ export default {
   z-index: 99;
   top: 0;
   display: flex;
-  max-width: 400px;
-  width: 320px;
+  max-width: 1000px;
+  width: 1000px;
   min-width: 320px;
   height: 80%;
   background: $secondary-dark-1;
@@ -127,9 +127,12 @@ export default {
 .carousel--image {
   height: auto;
   width: auto;
-  max-height: 300px;
+  max-height: 500px;
   max-width: 100%;
   border-radius: 10px;
+  transform: scale(0.5, 0.5) rotate(10deg);
+  transition: 1s;
+    box-shadow: 0.5em 0.5em 0.5em $secondary-shadow-light;
 }
 .DogModal--button {
   position: absolute;
@@ -179,6 +182,33 @@ export default {
   box-shadow: 0 0;
   color: $primary;
 }
+.agile__slide--active img{
+  transform: scale(1, 1) rotate(0deg);
+}
+.agile__slide--active img:active{
+  transform: scale(0.9, 0.9) rotate(5deg);
+}
+@media only screen and (min-device-width: 0px) and (max-device-width: 500px) {
+  .DogModal {
+    width: 320px;
+  }
+}
+@media only screen and (min-device-width: 500px) and (max-device-width: 1000px) {
+  .DogModal {
+    width: 450px;
+  }
+}
+@media only screen and (min-device-height: 0px) and (max-device-height: 700px) {
+  .carousel--image {
+    max-height: 300px;
+  }
+}
+@media only screen and (min-device-height: 700px) and (max-device-height: 800px) {
+  .carousel--image {
+    max-height: 400px;
+  }
+}
+
 </style>
 // // https://codepen.io/aybukeceylan/pen/RwrRPoO
 // // https://codepen.io/fredericrous/pen/xxVXJYX
