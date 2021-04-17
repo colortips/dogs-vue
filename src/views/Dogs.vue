@@ -215,6 +215,7 @@ export default {
   padding-left: 5px;
   color: $primary;
   margin: 0 5px;
+  background: $bg;
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 770px) {
   .dogs--filter span {
